@@ -1,3 +1,4 @@
+#CMD input to Arduino Using Serial communication
 #pip intstall pyserial
 
 import serial 
