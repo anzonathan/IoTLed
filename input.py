@@ -1,44 +1,24 @@
-//IOT LED 
+#pip intstall pyserial
 
-//Led 
-int led = 13;
-
-//Python Value from Host PC
-int input;
-
-void setup() {
-  //Serial Monitor to display Logs
-  Serial.begin(115200);
-  Serial.setTimeout(1); //yet to know what this does
-
-  //Declaring the led as an output
-  pinMode(led,OUTPUT);
+import serial 
+import time
 
 
-}
 
-void loop() {
-  //Listening for host serial
-  while (!Serial.available());
+#Serial Object
+arduino = serial.Serial(port = '/dev/cu.usbmodem144401', baudrate=115200, timeout=.1) #Port should be whichever com port
 
-  //Convert serial reading to integer: Try Serial.Read
-  input = Serial.readString().toInt();
-  //input = Serial.read();
+def write_read(x):
+    arduino.write(bytes(x,'utf-8'))
+    time.sleep(0.05)
+    data = arduino.readline()
+    return   data
 
-
-  if (input == 1){
-    digitalWrite(led, HIGH);
-    Serial.println("On");
-  }
-
-  else if (input == 2){
-    digitalWrite(led, LOW);
-    Serial.println("Off");
-  }
-
-  else {Serial.println("Invalid");}
+while True:
+    num = input("Press 1 for 'on' and 2 for 'off'\nEnter: ")
+    value = write_read(num)
+    print(value)
 
 
-  
 
-}
+   

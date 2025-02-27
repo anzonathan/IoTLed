@@ -22,8 +22,8 @@ void loop() {
   while (!Serial.available());
 
   //Convert serial reading to integer: Try Serial.Read
-  //input = Serial.readString().toInt();
-  input = Serial.read();
+  input = Serial.readString().toInt();
+  //input = Serial.read();
 
 
   if (input == 1){
