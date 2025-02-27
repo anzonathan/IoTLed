@@ -15,23 +15,25 @@ app.add_middleware(
 )
 
 
-switchState = 0; 
+switchState = 0
 
 @app.get("/")
 def readRoot():
     return {'State':'API Is connected'}
 
 @app.get("/state/")
-def readRoot():
+def readState():
     return {'switchState':switchState}
 
 
-@app.post("/on/")
+@app.get("/on/")
 def switchOn():
+    global switchState
     switchState = 1
     return {'switchState':switchState}
 
-@app.post("/off/")
+@app.get("/off/")
 def switchOff():
+    global switchState
     switchState = 0
     return {'switchState':switchState}
