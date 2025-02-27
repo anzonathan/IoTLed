@@ -23,15 +23,15 @@ def readRoot():
 
 @app.get("/state/")
 def readRoot():
-    return {'State':switchState}
+    return {'switchState':switchState}
 
 
 @app.post("/on/")
 def switchOn():
     switchState = 1
-    return {'State':switchState}
+    return {'switchState':switchState}
 
 @app.post("/off/")
 def switchOff():
     switchState = 0
-    return {'State':switchState}
+    return {'switchState':switchState}

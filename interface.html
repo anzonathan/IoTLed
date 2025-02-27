@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>Fast App</title>
+</head>
+<body class=" bg-blue text-center place-items-center pb-30 ">
+
+
+    <h1 class="font-bold text-5xl mt-20">API Connection Status</h1>
+    <div id="Txt" class="font-semibold w-60 mx-auto mt-20 bg-blue-500 text-white p-8"></div>
+
+    <button onclick="switchFunction()" id="switch" class="font-semibold w-60 mx-auto mt-20 bg-green-500 text-white p-8 hover:bg-green-700">Turn On</button>
+
+    <h1 class="font-bold text-5xl mt-20">Signal State</h1>
+    <div id="State" class="font-semibold w-60 mx-auto mt-2 text-5xl p-8"></div>
+
+    
+
+    <script>
+        //API URL
+        const apiURL = 'http://127.0.0.1:8000/';
+        const stateURL = 'http://127.0.0.1:8000/state/';
+        const onURL = 'http://127.0.0.1:8000/on/';
+        const offURL = 'http://127.0.0.1:8000/off/';
+
+        // Fetching the Data
+        fetch(apiURL)
+            .then(response => response.json())
+            
+            .then(data =>{
+                document.getElementById('Txt').textContent = data.State;
+            }
+            
+            )
+
+            .catch(error => {
+                console.error('Error', error);
+                document.getElementById('Txt').textContent = "Error fetching data.";
+        })
+
+        // State
+        fetch(stateURL)
+            .then(response => response.json())
+            
+            .then(data =>{
+                document.getElementById('State').textContent = data.State;
+            }
+            
+            )
+
+            .catch(error => {
+                console.error('Error', error);
+                document.getElementById('State').textContent = "Error fetching data.";
+        })
+
+        // On & Off
+        function switchState(url,text,color){
+                fetch(url)
+                .then(response => response.json())
+                
+                .then(data =>{
+                    document.getElementById('State').textContent = data.switchState;
+                    document.getElementById("switch").className= `font-semibold w-60 mx-auto mt-20 text-white bg-${color}-500 e p-8 hover:bg-${color}-700`;
+                    document.getElementById("switch").innerText = `${text}`;
+                }
+                
+                )
+
+                .catch(error => {
+                    console.error('Error', error);
+                    document.getElementById('State').textContent = "Error fetching data.";
+            })
+        }
+        var n=0;
+        function switchFunction(){
+            if (n == 0){
+                switchState(onURL,"Turn On","green")
+                n++;
+
+            }
+            else if (n == 1){
+                switchState(offURL,"Turn Off","red")
+                n--;
+            }
+
+        }
+        
+
+    </script>
+
+</body>
+</html>
