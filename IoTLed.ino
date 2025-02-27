@@ -31,7 +31,7 @@ void loop() {
     Serial.println("On");
   }
 
-  else if (input == 2){
+  else if (input == 0){
     digitalWrite(led, LOW);
     Serial.println("Off");
   }

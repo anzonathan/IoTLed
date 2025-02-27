@@ -27,21 +27,10 @@ def get_posts():
         # For handling any network related errors or exceptions
         print('Error:', e)
         return None
-
-def main():
-
-    posts = get_posts()
-    if posts:
-        print('Value:', posts['switchState'])
-
-    else:
-        print('Failed to fetch posts from API.')
-
-if __name__ == '__main__':
-    main()
-
+    
 
 #Serial Object
+#Arduino Communication
 arduino = serial.Serial(port = '/dev/cu.usbmodem146401', baudrate=115200, timeout=.1) #Port should be whichever com port
 
 def write_read(x):
@@ -49,6 +38,26 @@ def write_read(x):
     time.sleep(0.05)
     data = arduino.readline()
     return   data
+
+def main():
+
+    posts = get_posts()
+    x = posts['switchState']
+    if posts:
+        print('Value:', x)
+        write_read(str(x))
+
+    else:
+        print('Failed to fetch posts from API.')
+
+    
+        
+
+if __name__ == '__main__':
+    main()
+
+
+
 
 while True:
     main()
